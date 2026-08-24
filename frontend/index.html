@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Compass | AI-Powered Career Guidance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="brand-icon">🧭</span>
+        <span class="brand-name">Career Compass</span>
+      </div>
+      <div class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#reviews">Student Stories</a>
+        <a href="#feedback">Feedback</a>
+        <a href="assesment.html" class="btn-nav">Take Assessment</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <header>
+      <div class="brand-badge" style="margin-bottom: 1.25rem; display: inline-block;">
+        <span>🎓 AI-Powered Career Guidance & Counseling</span>
+      </div>
+      <h1>Confused About Your Next Step?<br><span>Find Your Right Career & Degree Path.</span></h1>
+      <p>Stop stressing over uncertain career choices. Complete a quick 2-minute assessment to discover suitable career directions, high-growth degree options, and an actionable roadmap designed for you.</p>
+      
+      <div class="hero-actions">
+        <a href="assesment.html" class="btn-primary">Start Free Assessment &rarr;</a>
+      </div>
+    </header>
+
+    <!-- How It Works Section (Simplified) -->
+    <section id="how-it-works" class="features-grid">
+      <div class="feature-card">
+        <h3>1. Share Your Profile</h3>
+        <p>Tell us about your current studies, existing skills, and interests in a quick 2-step assessment.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>2. Get Tailored Insights</h3>
+        <p>Receive clear recommendations on suitable job roles, degree pathways, and key skills to focus on.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>3. Step-by-Step Action Plan</h3>
+        <p>Get a personalized 3–6 month and 1–3 year roadmap to navigate your career with confidence.</p>
+      </div>
+    </section>
+
+    <!-- Student Reviews / Stories -->
+    <section id="reviews" style="margin-top: 5.5rem;">
+      <h2 style="text-align: center; font-size: 1.9rem; margin-bottom: 0.5rem;">What Students Are Saying</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 2.5rem; font-size: 0.95rem;">Real experiences from students who found clarity through our guidance engine.</p>
+      
+      <div class="features-grid" style="margin-top: 0;">
+        <div class="feature-card">
+          <div style="color: #fb923c; margin-bottom: 0.5rem;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1rem; color: var(--text-white);">"I was overwhelmed with different master's options. Career Compass broke down the right specialization for my background and budget in minutes!"</p>
+          <strong style="font-size: 0.85rem; color: var(--text-muted);">— Sarah M., Final Year Student</strong>
+        </div>
+
+        <div class="feature-card">
+          <div style="color: #fb923c; margin-bottom: 0.5rem;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1rem; color: var(--text-white);">"Instead of generic advice, I got an exact 6-month plan of what skills to learn and what projects to build for internship prep."</p>
+          <strong style="font-size: 0.85rem; color: var(--text-muted);">— Rahul K., Undergrad Student</strong>
+        </div>
+
+        <div class="feature-card">
+          <div style="color: #fb923c; margin-bottom: 0.5rem;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1rem; color: var(--text-white);">"The counselor follow-up was super helpful. It helped me choose the exact online degree format that fit my routine."</p>
+          <strong style="font-size: 0.85rem; color: var(--text-muted);">— Ananya P., Aspiring Analyst</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Feedback Section -->
+    <section id="feedback" style="margin-top: 5.5rem;">
+      <div class="feature-card" style="max-width: 650px; margin: 0 auto; padding: 2.5rem;">
+        <h2 style="font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem;">Help Us Improve</h2>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Have a suggestion or question about our career guidance platform? Let us know!</p>
+        
+        <form id="feedback-form" onsubmit="event.preventDefault(); alert('Thank you for your valuable feedback!'); this.reset();">
+          <div class="input-group">
+            <label for="fb-name">Your Name</label>
+            <input type="text" id="fb-name" required placeholder="e.g. Alex Johnson">
+          </div>
+          <div class="input-group">
+            <label for="fb-message">Your Feedback / Suggestion</label>
+            <textarea id="fb-message" rows="3" required placeholder="Write your thoughts here..." style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--text-white); padding: 0.8rem; border-radius: 10px; font-family: inherit; font-size: 0.9rem; outline: none; width: 100%; resize: vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn-secondary full-width" style="margin-top: 0.5rem;">Submit Feedback</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- Copyrights & Footer Bar -->
+  <footer class="footer-bar">
+    <div class="footer-container">
+      <p>&copy; 2026 Career Compass. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#how-it-works">About Platform</a>
+        <a href="assesment.html">Career Assessment</a>
+        <a href="#feedback">Support & Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

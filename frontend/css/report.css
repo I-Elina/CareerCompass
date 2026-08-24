@@ -1,0 +1,465 @@
+/* =========================================================
+   1. SCREEN VIEW STYLING (DARK, COLORFUL, GLASSMORPHIC)
+   ========================================================= */
+.print-only-doc {
+  display: none; /* Hidden on browser screen */
+}
+
+.report-container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.report-header {
+  text-align: left;
+  padding: 1.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  margin-bottom: 2.5rem;
+}
+
+.report-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.profile-summary {
+  color: #94a3b8;
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 850px;
+}
+
+.report-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.25rem;
+  background: #38bdf8;
+  border-radius: 4px;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.6);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.career-card {
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid #38bdf8;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.cards-grid > .career-card:nth-child(1) { border-left-color: #38bdf8; }
+.cards-grid > .career-card:nth-child(2) { border-left-color: #a855f7; }
+.cards-grid > .career-card:nth-child(3) { border-left-color: #34d399; }
+.cards-grid > .career-card:nth-child(4) { border-left-color: #fbbf24; }
+.cards-grid > .career-card:nth-child(5) { border-left-color: #f43f5e; }
+
+.career-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.career-card p {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 0.85rem;
+}
+
+.career-card .tag-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.dual-section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.roadmap-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+.roadmap-badge.short-term {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.roadmap-badge.long-term {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.verdict-card {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.screen-action-bar {
+  max-width: 1150px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Interactive Loader */
+.loading-backdrop,
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loader-spinner-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulsing-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #38bdf8;
+  border-right-color: #a855f7;
+  animation: spinOrbit 1.2s linear infinite;
+}
+
+.loader-icon {
+  font-size: 1.8rem;
+  animation: pulseIcon 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spinOrbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseIcon {
+  from { transform: scale(0.9); opacity: 0.8; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+
+#loading-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 0.4rem;
+}
+
+.loading-subtitle {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  min-height: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-track {
+  width: 100%;
+  max-width: 420px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin: 0 auto 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 15%;
+  background: linear-gradient(90deg, #38bdf8, #818cf8, #a855f7);
+  border-radius: 9999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-metrics {
+  display: flex;
+  justify-content: space-between;
+  max-width: 420px;
+  margin: 0 auto 1.5rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.loading-fact-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 1rem;
+  max-width: 420px;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.fact-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+#dynamic-fact {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .dual-section-grid, .roadmap-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   PRINT OVERRIDES (EXACT MATCH FOR DEMO PDF)
+   ========================================================= */
+@media print {
+  /* 1. Hide web-only UI elements */
+  #web-dashboard,
+  .screen-action-bar,
+  .loading-overlay,
+  .loading-backdrop,
+  .top-nav,
+  .footer-bar,
+  .no-print,
+  button,
+  a {
+    display: none !important;
+  }
+
+  /* 2. Show the dedicated clean print document */
+  .print-only-doc {
+    display: block !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Header */
+  .doc-header {
+    margin-bottom: 16pt !important;
+  }
+
+  .doc-name {
+    font-size: 18pt !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 6pt !important;
+  }
+
+  .doc-summary {
+    font-size: 10.5pt !important;
+    color: #000000 !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Section Titles */
+  .doc-block {
+    margin-bottom: 16pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .doc-title {
+    font-size: 12.5pt !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    border-bottom: 1.5pt solid #000000 !important;
+    padding-bottom: 3pt !important;
+    margin-bottom: 10pt !important;
+  }
+
+  /* Vertical Numbered Career Paths */
+  .doc-paths-container {
+    display: block !important;
+  }
+
+  .doc-path-entry {
+    display: block !important;
+    margin-bottom: 12pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .doc-path-heading {
+    font-size: 11pt !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 2pt !important;
+  }
+
+  .doc-path-fit {
+    font-size: 10pt !important;
+    color: #1e293b !important;
+    margin-bottom: 4pt !important;
+  }
+
+  .doc-meta-label {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-top: 4pt !important;
+  }
+
+  .doc-meta-val {
+    font-size: 10pt !important;
+    color: #000000 !important;
+    margin-bottom: 2pt !important;
+  }
+
+  /* Prioritized Skills with Crisp Arrow Bullets */
+  .doc-skills-ul {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+  }
+
+  .doc-skills-ul li {
+    font-size: 10pt !important;
+    color: #000000 !important;
+    margin-bottom: 4pt !important;
+    line-height: 1.4 !important;
+  }
+
+  .doc-skills-ul li::before {
+    content: "\25BA \0020" !important; /* Unicode solid right-pointing pointer */
+    font-size: 8.5pt !important;
+    color: #000000 !important;
+    margin-right: 4pt !important;
+  }
+
+  /* Bold Pathway Labels */
+  .doc-label-bold {
+    font-size: 10pt !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 2pt !important;
+  }
+
+  .doc-body-text {
+    font-size: 10pt !important;
+    color: #000000 !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Force AI Advisor Overall Verdict to Page 2 */
+  .doc-page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    margin-top: 24pt !important;
+  }
+
+  /* Academic & Counseling Box */
+  .doc-counseling-box {
+    border: 1pt solid #000000 !important;
+    padding: 12pt 14pt !important;
+    margin-top: 18pt !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

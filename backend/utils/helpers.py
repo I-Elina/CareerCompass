@@ -1,153 +1,117 @@
-import os
-import sys
 import json
+import os
 import re
-from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-import gspread
-from google.oauth2.service_account import Credentials
 
-# Ensure backend directory is in sys.path
-BACKEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if BACKEND_DIR not in sys.path:
-    sys.path.insert(0, BACKEND_DIR)
+load_dotenv()
 
-# Load environment variables
-load_dotenv(os.path.join(BACKEND_DIR, ".env"))
 
-# Initialize Google GenAI client
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    print("[WARNING] GEMINI_API_KEY is not set in backend/.env!")
+def run_career_pipeline(payload: dict) -> dict:
+    """
+    Executes the 6-stage career analysis in a single chat turn
+    without developer instructions to prevent 400 errors and AFC warnings.
+    """
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY is not configured in the environment.")
 
-client = genai.Client(api_key=api_key)
+    client = genai.Client(api_key=api_key)
 
-# Import prompt generators
-from prompts.profile_analysis import get_profile_analysis_prompt
-from prompts.career_recommendation import get_career_recommendations_prompt
-from prompts.skill_recommendation import get_skill_recommendation_prompt
-from prompts.degree_recommendation import get_degree_recommendations_prompt
-from prompts.university_recommendation import get_university_recommendation_prompt
-from prompts.final_report import get_final_report_prompt
+    # Embed directives directly into the prompt to support models without developer instruction capability
+    prompt = f"""
+    You are an expert AI Career and Education Strategist. Evaluate the candidate profile thoroughly
+    and return a clean, structured career blueprint in strict JSON format.
 
-def call_llm(prompt_text: str, json_mode: bool = False) -> str:
-    """Helper to send prompts to Google Gemini using the recommended Chat interface."""
-    config = types.GenerateContentConfig(
-        response_mime_type="application/json" if json_mode else "text/plain",
-        temperature=0.7
-    )
-    # Using client.chats.create avoids the Automatic Function Calling (AFC) warning
+    Candidate Assessment Profile:
+    - Name: {payload.get('name', 'Candidate')}
+    - Education / Academic Status: {payload.get('education', 'N/A')}
+    - Interests & Strengths: {payload.get('interests', 'N/A')}
+    - Current Technical / Domain Skills: {payload.get('skills', 'N/A')}
+    - Career Aspirations: {payload.get('goals', 'N/A')}
+    - Preferred Learning / Degree Mode: {payload.get('study_mode', 'Flexible')}
+
+    Synthesize all 6 evaluation areas:
+    1. Profile Analysis & Foundational Strengths
+    2. 3-4 High-Fit Career Paths (with target job titles and specific skill gaps)
+    3. High-Priority Technical & Domain Skills to Master
+    4. Degree & Specialization Recommendations
+    5. Target Institutions & Delivery Modes
+    6. Executive Short-term (0-12m) & Long-term (1-3y) Roadmap + Strategic Verdict
+
+    Return ONLY a valid JSON object matching this schema:
+    {{
+      "career_profile": "Summary analysis of candidate background and positioning.",
+      "career_paths": [
+        {{
+          "title": "Track Title",
+          "fit_reason": "Specific rationale tailored to their profile.",
+          "roles": ["Role 1", "Role 2"],
+          "skill_gaps": ["Gap 1", "Gap 2"]
+        }}
+      ],
+      "skills_to_learn": ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
+      "recommended_degrees": ["Degree Track 1", "Degree Track 2"],
+      "recommended_colleges": ["University / Provider 1", "University / Provider 2"],
+      "short_term_plan": "Specific milestones for months 0-12.",
+      "long_term_plan": "Strategic positioning for years 1-3.",
+      "overall_summary": "Executive verdict and closing perspective."
+    }}
+    """
+
+    # Using chat.send_message to eliminate AFC deprecation warnings
     chat = client.chats.create(
-        model="gemini-3.6-flash",
-        config=config
-    )
-    
-    response = chat.send_message(prompt_text)
-    return response.text.strip()
-
-def clean_json_response(raw_text: str) -> dict:
-    """Safely extracts and parses JSON even if wrapped in markdown formatting."""
-    cleaned = re.sub(r"^```json\s*", "", raw_text.strip(), flags=re.MULTILINE)
-    cleaned = re.sub(r"```$", "", cleaned.strip(), flags=re.MULTILINE)
-    return json.loads(cleaned)
-
-def run_prompt_pipeline(student_data: dict) -> dict:
-    """Executes the 6-stage modular prompt pipeline."""
-    # 1. Profile Analysis
-    p1 = get_profile_analysis_prompt(student_data)
-    profile_summary = call_llm(p1)
-
-    # 2. Career Recommendations
-    p2 = get_career_recommendations_prompt(profile_summary)
-    career_paths = call_llm(p2)
-
-    # 3. Skills Recommendation
-    p3 = get_skill_recommendation_prompt(career_paths, profile_summary)
-    skills_rec = call_llm(p3)
-
-    # 4. Degree Recommendations
-    p4 = get_degree_recommendations_prompt(
-        profile_summary, 
-        career_paths, 
-        student_data.get("degree_mode", "Not Sure")
-    )
-    degree_rec = call_llm(p4)
-
-    # 5. University Recommendations
-    p5 = get_university_recommendation_prompt(
-        degree_rec, 
-        student_data.get("budget", "Flexible"), 
-        student_data.get("preferred_location", "Any")
-    )
-    university_rec = call_llm(p5)
-
-    # 6. Final Report Synthesis
-    p6 = get_final_report_prompt(profile_summary, career_paths, skills_rec, degree_rec, university_rec)
-    final_raw = call_llm(p6, json_mode=True)
-    return clean_json_response(final_raw)
-
-def classify_lead(data: dict) -> tuple[bool, str]:
-    """Classifies lead based on assessment answers."""
-    mode = data.get("degree_mode", "")
-    intent = data.get("counseling_intent", "")
-
-    is_lead = (
-        mode in ["Online Degree", "Distance Learning", "Hybrid"] or
-        intent in ["Yes, I want counseling", "Yes, I want more information"]
+        model="gemini-3.5-flash-lite",
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            temperature=0.7
+        )
     )
 
-    if intent in ["Yes, I want counseling", "Yes, I want more information"]:
-        lead_type = f"{mode} - Counseling Interested" if mode else "Counseling Interested"
-    elif mode == "Online Degree":
-        lead_type = "Online Degree Lead"
-    elif mode == "Distance Learning":
-        lead_type = "Distance Learning Lead"
-    elif mode == "Hybrid":
-        lead_type = "Hybrid Degree Lead"
-    elif mode == "Offline/Regular Degree":
-        lead_type = "Offline Degree Explorer"
-    else:
-        lead_type = "Career Guidance Only"
+    response = chat.send_message(prompt)
+    raw_text = response.text.strip()
 
-    return is_lead, lead_type
+    # Clean markdown code block tags if present
+    if raw_text.startswith("```"):
+        raw_text = re.sub(r"^```(?:json)?\n?", "", raw_text)
+        raw_text = re.sub(r"\n?```$", "", raw_text).strip()
 
-def send_lead_to_google_sheet(data: dict, lead_type: str, report: dict):
-    """Logs qualified student leads to Google Sheet."""
-    creds_path = os.path.join(BACKEND_DIR, "credentials.json")
-    sheet_name = os.getenv("GOOGLE_SHEET_NAME", "Career_Leads")
+    return json.loads(raw_text)
+
+
+def classify_lead(payload: dict) -> str:
+    """Classifies user intent for counseling outreach."""
+    study_mode = str(payload.get("study_mode", "")).lower()
+    counseling = str(payload.get("counseling_interest", "")).lower()
+
+    if "online" in study_mode and ("yes" in counseling or "true" in counseling):
+        return "Online Degree - Counseling Interested"
+    elif "online" in study_mode:
+        return "Online Degree - Self Guided"
+    elif "yes" in counseling or "true" in counseling:
+        return "Campus Degree - Counseling Interested"
+    return "General Inquiry"
+
+
+def send_lead_to_google_sheet(payload: dict, classification: str):
+    """Safely logs lead data to Google Sheets without crashing if credentials are missing."""
+    creds_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "credentials.json")
+    sheet_name = os.getenv("GOOGLE_SHEET_NAME", "CareerCompass_Leads")
 
     if not os.path.exists(creds_path):
-        print("[Lead Logger] Optional: credentials.json not found. Lead recorded locally.")
         return
 
     try:
-        scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-        creds = Credentials.from_service_account_file(creds_path, scopes=scopes)
-        gc = gspread.authorize(creds)
+        import gspread
+        gc = gspread.service_account(filename=creds_path)
         sheet = gc.open(sheet_name).sheet1
-
-        ai_career = report.get("career_paths", [{}])[0].get("title", "N/A") if isinstance(report.get("career_paths"), list) else "N/A"
-        ai_degrees = ", ".join(report.get("recommended_degrees", [])) if isinstance(report.get("recommended_degrees"), list) else str(report.get("recommended_degrees", "N/A"))
-
-        row = [
-            data.get("name", ""),
-            data.get("phone", ""),
-            data.get("email", ""),
-            data.get("course", ""),
-            data.get("college", ""),
-            data.get("career_field", ""),
-            data.get("degree_mode", ""),
-            data.get("counseling_intent", ""),
-            lead_type,
-            ai_career,
-            ai_degrees,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "CareerCompass Web App"
-        ]
-
-        sheet.append_row(row)
-        print(f"[Lead Logger] Successfully logged lead for {data.get('name')}")
-    except Exception as e:
-        print(f"[Lead Logger] Google Sheets error: {e}")
+        sheet.append_row([
+            payload.get("name", "N/A"),
+            payload.get("email", "N/A"),
+            payload.get("education", "N/A"),
+            payload.get("study_mode", "N/A"),
+            classification
+        ])
+    except Exception as err:
+        print(f"[Warning] Google Sheets logging failed: {err}")

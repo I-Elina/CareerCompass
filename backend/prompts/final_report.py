@@ -1,14 +1,14 @@
 def get_final_report_prompt(profile_summary: str, career_paths: str, skills: str, degrees: str, universities: str) -> str:
-    """Generates final synthesized structured JSON report[cite: 1]."""
-    return f"""You are an executive career coach compiling the final student career report[cite: 1].
+    """Generates final synthesized structured JSON report."""
+    return f"""You are an executive career coach compiling the final student career report.
 Combine the following structured sections:
-- Profile Analysis: {profile_summary}[cite: 1]
-- Recommended Career Paths: {career_paths}[cite: 1]
-- Prioritized Skills: {skills}[cite: 1]
-- Degree Pathways: {degrees}[cite: 1]
-- College Suggestions: {universities}[cite: 1]
+- Profile Analysis: {profile_summary}
+- Recommended Career Paths: {career_paths}
+- Prioritized Skills: {skills}
+- Degree Pathways: {degrees}
+- College Suggestions: {universities}
 
-You must output STRICT JSON with this exact schema (no markdown wraps, pure JSON)[cite: 1]:
+You must output STRICT JSON with this exact schema (no markdown wraps, pure JSON):
 {{
   "career_profile": "Concise summary of student profile",
   "career_paths": [

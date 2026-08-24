@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Blueprint | CareerCompass AI</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/report.css" />
+</head>
+<body>
+
+  <!-- Screen Loading State -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader-spinner"></div>
+    <div class="progress-bar-track">
+      <div id="progress-bar" class="progress-bar-fill"></div>
+    </div>
+    <div id="step-indicator" class="loader-step">Step 1 of 4</div>
+    <h2 id="loading-status" class="loader-heading">Analyzing profile strengths & technical background...</h2>
+    <p id="eta-indicator" class="loader-eta">Estimated time: ~12s</p>
+    <div class="fact-box">
+      <p id="dynamic-fact">Targeting 2–3 high-impact portfolio projects often provides more signal than multiple basic certificates.</p>
+    </div>
+  </div>
+
+  <!-- Screen-Only Floating Navigation Bar -->
+  <aside class="screen-action-bar no-print">
+    <div class="action-container">
+      <button onclick="window.print()" class="btn-print">
+        🖨️ Print / Save PDF Report
+      </button>
+      <a href="index.html" class="btn-dashboard">
+        ← Back to Dashboard
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Report Container -->
+  <main id="report-content" class="report-container" style="display: none;">
+    
+    <!-- Candidate Header & Summary -->
+    <header class="report-header">
+      <h1 id="user-heading">Career Blueprint</h1>
+      <p id="profile-summary" class="profile-summary"></p>
+    </header>
+
+    <!-- Section 1: Career Paths -->
+    <section class="report-section">
+      <h2 class="section-title">Recommended Career Paths</h2>
+      <div id="career-paths-grid" class="cards-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Section 2: Skills & Education Pathway -->
+    <div class="dual-section-grid">
+      <!-- Prioritized Skills -->
+      <section class="report-section glass-card">
+        <h2 class="section-title">Prioritized Skills to Master</h2>
+        <div id="skills-list">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Degrees & Universities -->
+      <section class="report-section glass-card">
+        <h2 class="section-title">Recommended Degree & College Pathways</h2>
+        <div id="education-pathway">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Section 3: Roadmap -->
+    <section class="report-section">
+      <h2 class="section-title">Actionable Career Roadmap</h2>
+      <div class="roadmap-grid">
+        <div class="glass-card roadmap-card">
+          <span class="roadmap-badge short-term">Next 3–12 Months</span>
+          <h3 class="roadmap-heading">Short-Term Execution</h3>
+          <p id="short-term-plan" class="roadmap-text"></p>
+        </div>
+        <div class="glass-card roadmap-card">
+          <span class="roadmap-badge long-term">Next 1–3 Years</span>
+          <h3 class="roadmap-heading">Long-Term Trajectory</h3>
+          <p id="long-term-plan" class="roadmap-text"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: AI Advisor Verdict (Forces new page on print) -->
+    <section class="report-section verdict-section page-break-before">
+      <div class="glass-card verdict-card">
+        <h3>AI Advisor Overall Verdict</h3>
+        <p id="overall-verdict"></p>
+        
+        <!-- Counseling Contact Block (Serious outline on print, stylish callout on web) -->
+        <div class="counseling-box">
+          <h4>Personalized Academic & Career Counseling</h4>
+          <p>Need 1-on-1 guidance on college admissions, curriculum sequencing, or online degree enrollment?</p>
+          <ul class="contact-details">
+            <li><strong>Counseling Desk:</strong> admissions@careercompass.edu</li>
+            <li><strong>Helpline:</strong> +91 98765 43210 (Mon–Fri, 9:00 AM – 6:00 PM)</li>
+            <li><strong>Online Portal:</strong> https://careercompass.ai/counseling</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/report.js"></script>
+</body>
+</html>

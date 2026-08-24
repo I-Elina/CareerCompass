@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Compass | Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/assesment.css">
+</head>
+<body>
+
+  <div class="assessment-wrapper">
+    <!-- Left Pane: Carousel with Insights -->
+    <aside class="carousel-pane">
+      <div class="brand-badge">
+        <span>⚡ AI Career Counselor</span>
+      </div>
+
+      <div class="slider-container">
+        <div class="slide active">
+          <div class="slide-tag">Career Insight</div>
+          <h2>85% of Freshers Lack Targeted Skill Alignment</h2>
+          <p>Companies prioritize verified project outcomes over generic resume bullets. Pinpoint exactly where your gaps are before applying.</p>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag">High-Growth Tracks</div>
+          <h2>Top Skills In Demand</h2>
+          <p>Full-Stack Engineering, Applied AI/ML pipelines, Cloud Architecture, and Data Analytics command significantly higher starting packages.</p>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag">Higher Education</div>
+          <h2>Right Degree, Higher Growth</h2>
+          <p>Choosing the right specialization and study mode (Online, Offline, Hybrid) accelerates long-term career progression.</p>
+        </div>
+      </div>
+
+      <div class="slider-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </aside>
+
+    <!-- Right Pane: 2-Step Form -->
+    <main class="form-pane">
+      <div class="form-header">
+        <div class="step-indicator">
+          <span id="step-label">Part 1: Personal & Contact Information</span>
+          <div class="progress-track">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <form id="career-form">
+        <!-- PART 1: PERSONAL & CONTACT DETAILS -->
+        <section class="form-step active-step" id="step-1">
+          <h3>Personal Details</h3>
+          <p class="subtitle">Tell us who you are so we can personalize your guidance.</p>
+
+          <div class="input-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required placeholder="e.g. Alex Johnson" minlength="2">
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required placeholder="alex@example.com">
+          </div>
+
+          <div class="input-group">
+            <label for="phone">Phone / WhatsApp Number</label>
+            <div class="phone-group">
+              <select id="country-code" required>
+                <option value="+91" selected>🇮🇳 +91 (India)</option>
+                <option value="+1">🇺🇸 +1 (US/Canada)</option>
+                <option value="+44">🇬🇧 +44 (UK)</option>
+                <option value="+971">🇦🇪 +971 (UAE)</option>
+                <option value="+65">🇸🇬 +65 (Singapore)</option>
+                <option value="+61">🇦🇺 +61 (Australia)</option>
+                <option value="+49">🇩🇪 +49 (Germany)</option>
+              </select>
+              <input 
+                type="tel" 
+                id="phone" 
+                required 
+                placeholder="10-digit number" 
+                pattern="[0-9]{10}" 
+                maxlength="10" 
+                title="Please enter a valid 10-digit mobile number"
+              >
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="preferred-location">Preferred Work / Study Location</label>
+            <input type="text" id="preferred-location" required placeholder="e.g. Bangalore, Delhi NCR, Remote, Abroad">
+          </div>
+
+          <button type="button" class="btn-primary full-width" id="btn-next">Next: Academic & Career Goals &rarr;</button>
+        </section>
+
+        <!-- PART 2: EDUCATIONAL & CAREER GOALS -->
+        <section class="form-step" id="step-2">
+          <h3>Education & Goals</h3>
+          <p class="subtitle">Provide your academic background and aspirations.</p>
+
+          <div class="grid-2">
+            <div class="input-group">
+              <label for="degree-course">Degree / Course</label>
+              <select id="degree-course" required>
+                <option value="" disabled selected>Select Degree</option>
+                <option value="B.Tech / B.E. (Computer Science/IT)">B.Tech / B.E. (CS/IT)</option>
+                <option value="B.Tech / B.E. (Other Branches)">B.Tech / B.E. (Other)</option>
+                <option value="BCA">BCA</option>
+                <option value="B.Sc (Computer Science / IT / Data)">B.Sc (CS/IT/Data)</option>
+                <option value="B.Sc (General / Others)">B.Sc (General)</option>
+                <option value="B.Com / BBA">B.Com / BBA</option>
+                <option value="MCA">MCA</option>
+                <option value="M.Tech / M.E.">M.Tech / M.E.</option>
+                <option value="M.Sc / MBA">M.Sc / MBA</option>
+                <option value="12th / High School">12th / High School</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="current-year">Current Year / Semester</label>
+              <select id="current-year" required>
+                <option value="" disabled selected>Select Year/Sem</option>
+                <option value="1st Year (Sem 1-2)">1st Year (Sem 1-2)</option>
+                <option value="2nd Year (Sem 3-4)">2nd Year (Sem 3-4)</option>
+                <option value="3rd Year (Sem 5-6)">3rd Year (Sem 5-6)</option>
+                <option value="4th Year (Sem 7-8)">4th Year (Sem 7-8)</option>
+                <option value="Final Year / Graduated">Final Year / Graduated</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="college">College / University Name</label>
+            <input type="text" id="college" required placeholder="e.g. State Technical University">
+          </div>
+
+          <div class="grid-2">
+            <div class="input-group">
+              <label for="skills">Current Skills</label>
+              <input type="text" id="skills" required placeholder="e.g. Python, SQL, Git">
+            </div>
+            <div class="input-group">
+              <label for="career-field">Target Career Direction</label>
+              <input type="text" id="career-field" required placeholder="e.g. AI Engineer, Web Developer">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="input-group">
+              <label for="degree-mode">Higher Education Mode</label>
+              <select id="degree-mode" required>
+                <option value="" disabled selected>Select mode</option>
+                <option value="Online Degree">Online Degree</option>
+                <option value="Offline/Regular Degree">Offline/Regular Degree</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Distance Learning">Distance Learning</option>
+                <option value="Not Sure Yet">Not Sure Yet</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="counseling-intent">Need Admission Counseling?</label>
+              <select id="counseling-intent" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="Yes, I want counseling">Yes, I want counseling</option>
+                <option value="Yes, I want more information">Yes, I want more information</option>
+                <option value="Maybe, I'm exploring options">Maybe, exploring options</option>
+                <option value="No, I just want career guidance">No, career guidance only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="budget">Budget for Higher Ed (if applicable)</label>
+            <select id="budget" required>
+              <option value="" disabled selected>Select budget range</option>
+              <option value="Under 1 Lakh INR">Under 1 Lakh INR</option>
+              <option value="1 - 3 Lakhs INR">1 - 3 Lakhs INR</option>
+              <option value="3 - 6 Lakhs INR">3 - 6 Lakhs INR</option>
+              <option value="Above 6 Lakhs INR">Above 6 Lakhs INR</option>
+              <option value="Not Planning Higher Ed">Not Planning Higher Ed</option>
+            </select>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-secondary" id="btn-back">&larr; Back</button>
+            <button type="submit" class="btn-primary" id="btn-submit">Generate Career Report ⚡</button>
+          </div>
+        </section>
+      </form>
+    </main>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
