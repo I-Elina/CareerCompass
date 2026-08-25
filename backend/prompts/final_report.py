@@ -1,14 +1,28 @@
 def get_final_report_prompt(profile_summary: str, career_paths: str, skills: str, degrees: str, universities: str) -> str:
-    """Generates final synthesized structured JSON report."""
-    return f"""You are an executive career coach compiling the final student career report.
-Combine the following structured sections:
+    """Generates an executive final report prompt with Chain-of-Thought, strict keys, and inclusive positive framing."""
+    
+    return f"""You are an elite executive career coach compiling the final synthesized student career report. Your job is to integrate all previous insights into a cohesive, highly encouraging, and structured final roadmap.
+
+INPUT SECTIONS TO SYNTHESIZE:
 - Profile Analysis: {profile_summary}
-- Recommended Career Paths: {career_paths}
+- Recommended Career Paths: 
+{career_paths}
 - Prioritized Skills: {skills}
 - Degree Pathways: {degrees}
 - College Suggestions: {universities}
 
-You must output STRICT JSON with this exact schema (no markdown wraps, pure JSON):
+### Evaluation Methodology (Chain-of-Thought):
+1. **Holistic Review:** Synthesize all input sections—especially ensuring the specific career paths provided above are accurately detailed in the final JSON output. If the user's path is non-traditional or multidisciplinary (e.g., engineering transitioning into transportation or small business), champion it as a unique competitive advantage.
+2. **Actionable Roadmap Alignment:** Ensure the short-term and long-term plans logically connect their current baseline to their ultimate ambitions.
+3. **Strict Formatting Check:** Verify that every field maps cleanly to the required schema keys.
+
+### Negative Constraints (What NOT to do):
+- DO NOT judge, question, or discourage any unconventional career choices or niche ambitions.
+- DO NOT output any markdown formatting, code block wraps (like ```json), or conversational filler outside of the raw JSON object.
+- DO NOT alter any root or nested keys from the requested schema.
+
+OUTPUT FORMAT REQUIREMENT:
+You must output STRICT, pure JSON with this exact schema and no markdown wraps:
 {{
   "career_profile": "Concise summary of student profile",
   "career_paths": [

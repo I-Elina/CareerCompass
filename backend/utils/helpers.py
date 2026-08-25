@@ -4,6 +4,7 @@ import re
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from services.lead_service import save_counseling_lead
 
 load_dotenv()
 
@@ -94,24 +95,47 @@ def classify_lead(payload: dict) -> str:
     return "General Inquiry"
 
 
-def send_lead_to_google_sheet(payload: dict, classification: str):
-    """Safely logs lead data to Google Sheets without crashing if credentials are missing."""
-    creds_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "credentials.json")
-    sheet_name = os.getenv("GOOGLE_SHEET_NAME", "CareerCompass_Leads")
+def send_lead_to_google_sheet(data: dict, lead_type: str) -> bool:
+    """Extracts student data and pushes a qualified lead to the Google Sheet."""
+    name = data.get("name", "Unknown")
+    email = data.get("email", "N/A")
+    phone = data.get("phone", "N/A")
+    current_education = data.get("current_year", "N/A")  # Matches your dropdown option
+    current_course = data.get("degree", "N/A")
+    college = data.get("college", "N/A")
+    career_interest = data.get("career_goals", "N/A")
+    preferred_degree_mode = data.get("preferred_degree_mode", "N/A")
+    counseling_required = lead_type
+    preferred_specialization = data.get("preferred_specialization", "N/A")
+    ai_recommended_career = data.get("ai_recommended_career", "Analyzed via Engine")
+    ai_recommended_degree = data.get("ai_recommended_degree", "Standard Track")
+    
+    return save_counseling_lead(
+        name=name,
+        email=email,
+        phone=phone,
+        current_education=current_education,
+        current_course=current_course,
+        college=college,
+        career_interest=career_interest,
+        preferred_degree_mode=preferred_degree_mode,
+        counseling_required=counseling_required,
+        preferred_specialization=preferred_specialization,
+        ai_recommended_career=ai_recommended_career,
+        ai_recommended_degree=ai_recommended_degree,
+        lead_source="Web Assessment Form"
+    )
 
-    if not os.path.exists(creds_path):
-        return
-
+def clean_and_parse_json(ai_response_text: str) -> dict:
+    """Cleans markdown wrappers and parses LLM JSON safely."""
+    # 1. Strip out markdown code blocks if the model included them
+    cleaned_text = re.sub(r"^```(?:json)?\s*", "", ai_response_text.strip(), flags=re.IGNORECASE)
+    cleaned_text = re.sub(r"\s*```$", "", cleaned_text)
+    
+    # 2. Parse into Python dictionary safely
     try:
-        import gspread
-        gc = gspread.service_account(filename=creds_path)
-        sheet = gc.open(sheet_name).sheet1
-        sheet.append_row([
-            payload.get("name", "N/A"),
-            payload.get("email", "N/A"),
-            payload.get("education", "N/A"),
-            payload.get("study_mode", "N/A"),
-            classification
-        ])
-    except Exception as err:
-        print(f"[Warning] Google Sheets logging failed: {err}")
+        return json.loads(cleaned_text)
+    except json.JSONDecodeError as e:
+        # Fallback or detailed error logging
+        print(f"[JSON Parse Error]: {e}\nRaw text was:\n{ai_response_text}")
+        raise e
