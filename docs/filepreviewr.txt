@@ -23,7 +23,6 @@
   font-weight: 800;
   margin-top: 0.5rem;
   background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
-  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
@@ -295,13 +294,6 @@
   margin: 0;
 }
 
-ul.contact-details {
-  list-style-type: none;   
-  padding: 0;              
-
-  margin: 0;               
-}
-
 @media (max-width: 800px) {
   .dual-section-grid, .roadmap-grid {
     grid-template-columns: 1fr;
@@ -312,13 +304,7 @@ ul.contact-details {
    PRINT OVERRIDES (EXACT MATCH FOR DEMO PDF)
    ========================================================= */
 @media print {
-  /* 1. Force exact colors using webkit print adjust */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* 2. Hide web-only UI elements */
+  /* 1. Hide web-only UI elements */
   #web-dashboard,
   .screen-action-bar,
   .loading-overlay,
@@ -331,29 +317,7 @@ ul.contact-details {
     display: none !important;
   }
 
-  /* 3. Force clean white page background globally and clear dark themes */
-  html, body, .report-container, .glass-card, .verdict-card {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border-color: #cbd5e1 !important;
-  }
-
-  /* 4. Fix Gradient Headings disappearing in print */
-  h1, .report-header h1, .section-title, .career-card h3 {
-    background: none !important;
-    background-clip: initial !important;
-    -webkit-background-clip: initial !important;
-    -webkit-text-fill-color: #000000 !important;
-    color: #000000 !important;
-    display: block !important;
-    visibility: visible !important;
-  }
-
-  /* 5. Show the dedicated clean print document */
+  /* 2. Show the dedicated clean print document */
   .print-only-doc {
     display: block !important;
     width: 100% !important;
@@ -497,36 +461,5 @@ ul.contact-details {
     background: #ffffff !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-  }
-
-  /* 6. Typography Polish & Clean Page Splitting */
-  p, li, span {
-    orphans: 3;
-    widows: 3;
-  }
-
-  .doc-block, .career-card, .doc-counseling-box {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  /* Crisp table/border separation for sections */
-  .doc-title {
-    border-bottom: 2pt solid #000000 !important;
-    margin-top: 14pt !important;
-  }
-}
-
-@media print {
-  .report-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff !important;
-    color: #475569 !important;
-    border-top: 1px solid #cbd5e1 !important;
-    padding: 10px 0 !important;
-    text-align: center !important;
   }
 }
