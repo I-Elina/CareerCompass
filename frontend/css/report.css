@@ -518,15 +518,24 @@ ul.contact-details {
 }
 
 @media print {
+  /* Ensure the body allows proper page flow */
+  body {
+    margin-bottom: 20px;
+  }
+
+  /* Style the disclaimer as a discreet, single-line footer at the end */
   .report-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff !important;
-    color: #475569 !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    background: transparent !important;
+    color: #64748b !important;
     border-top: 1px solid #cbd5e1 !important;
-    padding: 10px 0 !important;
+    padding: 8px 0 !important;
+    margin-top: 30px !important;
     text-align: center !important;
+    font-size: 7.5pt !important; /* Smaller, neat font size */
+    page-break-inside: avoid;
   }
 }
